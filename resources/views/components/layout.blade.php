@@ -12,7 +12,7 @@
     <div id="app">
 
       <!-- Navbar mejorada -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{ route('home') }}">ElectroPods</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,10 +30,10 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               @guest
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('auth.login') }}">Iniciar sesión</a>
+                  <x-nav-link route="auth.login">Iniciar Sesión</x-nav-link>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('auth.register') }}">Registrarse</a>
+                   <x-nav-link route="auth.register">Registrarse</x-nav-link>
                 </li>
               @endguest
 
@@ -72,7 +72,7 @@
         </div>
       </main>
 
-      <footer class="bg-dark text-white text-center py-3 fixed-bottom">
+      <footer class="bg-dark text-white text-center py-3 ">
         <p class="mb-0">&copy; Da Vinci 2024</p>
       </footer>
 
