@@ -43,8 +43,8 @@
                     {{ Auth::user()->username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    {{-- <li><a class="dropdown-item" href="#">Mi perfil</a></li> --}}
+                    {{-- <li><hr class="dropdown-divider"></li> --}}
                     <li>
                       <form method="POST" action="{{ route('auth.logout') }}">
                         @csrf
