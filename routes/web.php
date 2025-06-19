@@ -28,27 +28,35 @@ Route::get('/blog/{id}', [\App\http\Controllers\BlogController::class, 'view'])
 // Editar
 Route::get('/blog/{id}/editar', [\App\http\Controllers\BlogController::class, 'edit'])
         ->name('blogs.edit')
-        ->whereNumber('id');
+        ->whereNumber('id')
+        ->middleware('auth');
 
 // Actualizar
 Route::put('/blog/{id}', [\App\http\Controllers\BlogController::class, 'update'])
         ->name('blogs.update')
-        ->whereNumber('id');
+        ->whereNumber('id')
+        ->middleware('auth');
 
 
 //Eliminar
+Route::get('/blog/{id}/eliminar', [\App\http\Controllers\BlogController::class,'delete'])
+    ->name('blogs.delete')
+    ->middleware('auth');
 Route::delete('/blog/{id}', [\App\http\Controllers\BlogController::class, 'destroy'])
         ->name('blogs.destroy')
-        ->whereNumber('id');
+        ->whereNumber('id')
+        ->middleware('auth');
 
 
 //Mostrar formulario para crear una entrada
 Route::get('/blogs/crear',  [\App\http\Controllers\BlogController::class, 'create'])
-    ->name('blogs.create');
+    ->name('blogs.create')
+    ->middleware('auth');
 
 //Guardar entrada en la base de datos
 Route::post('/blogs', [\App\http\Controllers\BlogController::class, 'store'])
-    ->name('blogs.store');
+    ->name('blogs.store')
+    ->middleware('auth');
 
 
     // Mostrar formulario de login
@@ -64,4 +72,4 @@ Route::get('/registro', [\App\http\Controllers\AuthController::class, 'showRegis
 Route::post('/registro', [\App\http\Controllers\AuthController::class, 'register'])->name('auth.register.submit');
 
 // Cerrar sesión
-Route::post('/cerrar-sesion', [\App\http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
+Route::post('cerrar-sesion', [\App\http\Controllers\AuthController::class, 'logout'])->name('auth.logout');

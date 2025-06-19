@@ -4,7 +4,7 @@
     <div class="container mt-5" style="max-width: 400px;">
         <h1 class="mb-4 text-center">Iniciar Sesión</h1>
 
-        <form method="POST" action="{{ route('auth.login') }}">
+        <form method="POST" action="{{ route('auth.authenticate') }}">
             @csrf
             <div class="mb-3">
                 <label for="username" class="form-label">Usuario</label>

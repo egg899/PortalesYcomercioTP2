@@ -49,11 +49,14 @@
                                 @auth
                                     <a href="{{ route('blogs.edit', ['id'=>$blog->id]) }}" class="btn btn-sm btn-warning ms-1">Editar</a>
 
-                                    <form action="{{ route('blogs.destroy', ['id'=>$blog->id]) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('¿Estás seguro de eliminar esta entrada?');">
+                                    <a href="{{ route('blogs.delete', ['id'=>$blog->id]) }}" class="btn btn-sm btn-danger">
+                                        Eliminar
+                                    </a>
+                                    {{-- <form action="{{ route('blogs.destroy', ['id'=>$blog->id]) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('¿Estás seguro de eliminar esta entrada?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
+                                    </form> --}}
                                 @endauth
                             </div>
                         </div>

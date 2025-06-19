@@ -12,6 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo(function(\Illuminate\Http\Request $request) {
+            session()->flash(
+                'feedback.message',
+                'Se requiere estar autenticado para aceder a esta página.'
+            );
+            session()->flash('feedback.type', 'danger');
             return route('auth.login');
         });
     })

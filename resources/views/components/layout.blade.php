@@ -27,34 +27,32 @@
               <x-nav-link route="blogs.index">Blog</x-nav-link>
             </ul>
 
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              @guest
-                <li class="nav-item">
-                  <x-nav-link route="auth.login">Iniciar Sesión</x-nav-link>
-                </li>
-                <li class="nav-item">
-                   <x-nav-link route="auth.register">Registrarse</x-nav-link>
-                </li>
-              @endguest
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        @if (!auth()->check())
+                            <li class="nav-item">
+                            <x-nav-link route="auth.login">Iniciar Sesión</x-nav-link>
+                            </li>
+                            <li class="nav-item">
+                            <x-nav-link route="auth.register">Registrarse</x-nav-link>
+                            </li>
+                        @else
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ auth()->user()->username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>
+                                {{-- <form method="POST" action="{{ route('auth.logout') }}"> --}}
+                                <form method="POST" action="{{ url('/cerrar-sesion') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                </form>
+                                </li>
+                            </ul>
+                            </li>
+                        @endif
+                    </ul>
 
-              @auth
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ Auth::user()->username }}
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    {{-- <li><a class="dropdown-item" href="#">Mi perfil</a></li> --}}
-                    {{-- <li><hr class="dropdown-divider"></li> --}}
-                    <li>
-                      <form method="POST" action="{{ route('auth.logout') }}">
-                        @csrf
-                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
-                      </form>
-                    </li>
-                  </ul>
-                </li>
-              @endauth
-            </ul>
           </div>
         </div>
       </nav>

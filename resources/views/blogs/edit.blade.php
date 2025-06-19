@@ -58,6 +58,19 @@
                 @enderror
             </div>
 
+
+            <div class="mb-5">
+                <label for="resumen" class="form-label fw-semibold">Resumen</label>
+                <input
+                    type="text"
+                    name="resumen"
+                    class="form-control @error('resumen') is-invalid @enderror"
+                    placeholder="Resumen"
+                    value="{{ old('resumen') }}"
+                    required
+                >
+            </div>
+
             <div class="mb-5">
                 <label for="contenido" class="form-label fw-semibold">Contenido</label>
                 <textarea

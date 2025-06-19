@@ -34,10 +34,22 @@ class BlogController extends Controller
         $blog = Blog::findOrFail($id);
 
         $data = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'contenido' => 'required|string',
-            'imagen' => 'nullable|image|max:2048',
-    ]);
+                    'titulo' => 'required|string|max:255',
+                    'resumen' => 'nullable|string|max:500', // Mejor agregar un límite razonable
+                    'contenido' => 'required|string',
+                    'imagen' => 'nullable|image|max:2048', // 2048 KB = 2MB
+                ], [
+                    'titulo.required' => 'El título es obligatorio.',
+                    'titulo.max' => 'El título no debe superar los :max caracteres.',
+
+                    'resumen.max' => 'El resumen no debe superar los :max caracteres.',
+
+                    'contenido.required' => 'El contenido es obligatorio.',
+
+                    'imagen.image' => 'El archivo debe ser una imagen válida.',
+                    'imagen.max' => 'La imagen no debe pesar más de 2MB.',
+                ]);
+
 
         // Verificamos si se subió la imagen
         if($request->hasFile('imagen')) {
@@ -60,6 +72,12 @@ class BlogController extends Controller
     return redirect()->route('blogs.view', $blog->id)->with('feedback.message', 'La entrada <b>'.e($blog['titulo']).'</b> actualizada');
     }
 
+    public function delete(int $id)
+    {
+        return view('blogs.delete', [
+            'blog' => Blog::findOrFail($id)
+        ]);
+    }
 
 
     public function destroy($id)
@@ -88,13 +106,33 @@ class BlogController extends Controller
    public function store(Request $request)
 {
     $request->validate([
-        'titulo' => 'required|string|max:255',
-        'resumen' => 'required|string|max:500',
-        'contenido' => 'required|string',
-        'autor' => 'required|string|max:100',
-        'categoria' => 'required|string|max:100',
-        'imagen' => 'nullable|image|max:2048',
-    ]);
+    'titulo' => 'required|string|min:4|max:255',
+    'resumen' => 'nullable|string|max:500|min:10',
+    'contenido' => 'required|string',
+    'autor' => 'required|string|max:100',
+    'categoria' => 'required|string|max:100',
+    'imagen' => 'nullable|image|max:2048',
+], [
+    'titulo.required' => 'El título debe tener un valor.',
+    'titulo.min' => 'El título debe tener al menos :min caracteres.',
+    'titulo.max' => 'El título no puede superar los :max caracteres.',
+
+    // 'resumen.required' => 'El resumen es obligatorio.',
+    'resumen.max' => 'El resumen no debe superar los :max caracteres.',
+    'resumen.min' => 'El reusme debe de tener al menos :min caracteres.',
+
+    'contenido.required' => 'El contenido es requerido.',
+
+    'autor.required' => 'El autor es requerido.',
+    'autor.max' => 'El autor no debe superar los :max caracteres.',
+
+    'categoria.required' => 'La categoría es requerida.',
+    'categoria.max' => 'La categoría no debe superar los :max caracteres.',
+
+    'imagen.image' => 'El archivo debe ser una imagen.',
+    'imagen.max' => 'La imagen no debe superar los 2MB.',
+]);
+
     $input = $request->only(['titulo', 'resumen', 'contenido', 'autor', 'categoria']);
 
     $rutaImagen = null;
