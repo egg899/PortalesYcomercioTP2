@@ -1,3 +1,7 @@
+<?php
+/** @var \Illuminate\Support\ViewErrorBag $errors */
+?>
+
 <x-layout>
     <x-slot:title>Crear Entrada</x-slot>
 
@@ -58,6 +62,12 @@
 
         <h1 class="mb-4 text-center">Ingresa una Nueva Entrada</h1>
 
+        @if($errors->any())
+            <div class="alert alert-danger">
+                La información ingresada contiene errores.
+                Por favor, revisá los campos y probá de nuevo.
+            </div>
+        @endif
         <form method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data" novalidate>
             @csrf
 

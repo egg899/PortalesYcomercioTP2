@@ -15,7 +15,7 @@ Route::get('/quienes-somos', [\App\Http\Controllers\AboutController::class, 'abo
 Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index'])
     ->name('producto.index');
 
-Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])
+Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])
     ->name('blogs.index');
 
 

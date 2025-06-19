@@ -16,7 +16,7 @@ class BlogController extends Controller
 
     public function view($id)
     {
-        $blog = \App\Models\Blog::findOrFail($id);
+        $blog = Blog::findOrFail($id);
         return view('blogs.view', ['blog' => $blog]);
     }
 
@@ -57,7 +57,7 @@ class BlogController extends Controller
 
     $blog->update($data);
 
-    return redirect()->route('blogs.view', $blog->id)->with('feedback.message', 'Entrada actualizada');
+    return redirect()->route('blogs.view', $blog->id)->with('feedback.message', 'La entrada <b>'.e($blog['titulo']).'</b> actualizada');
     }
 
 
@@ -75,7 +75,7 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        return redirect('/blog')->with(['feedback.message' => 'Entrada eliminada', 'feedback.type'=>'danger']);
+        return redirect('/blogs')->with(['feedback.message' => 'La entrada <b>'.e($blog['titulo']).'</b> eliminada', 'feedback.type'=>'danger']);
     }
 
 
@@ -95,22 +95,36 @@ class BlogController extends Controller
         'categoria' => 'required|string|max:100',
         'imagen' => 'nullable|image|max:2048',
     ]);
+    $input = $request->only(['titulo', 'resumen', 'contenido', 'autor', 'categoria']);
 
     $rutaImagen = null;
     if ($request->hasFile('imagen')) {
         $rutaImagen = $request->file('imagen')->store('images', 'public');
     }
 
-    \App\Models\Blog::create([
-        'titulo' => $request->titulo,
-        'resumen' => $request->resumen,
-        'contenido' => $request->contenido,
-        'autor' => $request->autor,
-        'categoria' => $request->categoria,
-        'imagen' => $rutaImagen,
-    ]);
+    // Blog::create([
+    //     'titulo' => $request->titulo,
+    //     'resumen' => $request->resumen,
+    //     'contenido' => $request->contenido,
+    //     'autor' => $request->autor,
+    //     'categoria' => $request->categoria,
+    //     'imagen' => $rutaImagen,
+    // ]);
 
-    return redirect()->route('blogs.index')->with('feedback.message', 'Entrada creada correctamente.');
+        // $blog = new Blog();
+        // $blog->titulo = $request->titulo;
+        // $blog->resumen = $request->resumen;
+        // $blog->contenido = $request->contenido;
+        // $blog->autor = $request->autor;
+        // $blog->categoria = $request->categoria;
+        // $blog->imagen = $rutaImagen;
+        // $blog->save();
+
+        $input = $request->all();
+        $blog=Blog::create($input);
+
+
+    return redirect()->route('blogs.index')->with('feedback.message', 'La entrada <b>'.e($blog['titulo']).'</b> ha sido creada correctamente.');
 }
 
 

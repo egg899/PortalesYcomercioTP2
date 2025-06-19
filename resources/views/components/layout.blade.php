@@ -63,7 +63,7 @@
       <main class="p-4 flex-grow-1 mb-5">
         @if(session()->has('feedback.message'))
           <div class="alert alert-{{ session('feedback.type', 'success') }}">
-            {{ session('feedback.message') }}
+           {!! session('feedback.message') !!}
           </div>
         @endif
 

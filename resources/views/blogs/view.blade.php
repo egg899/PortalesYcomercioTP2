@@ -1,3 +1,5 @@
+
+
 <x-layout>
     <x-slot:title>{{ $blog->titulo }}</x-slot:title>
 

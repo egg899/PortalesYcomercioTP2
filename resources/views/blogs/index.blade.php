@@ -1,3 +1,5 @@
+
+
 <x-layout>
     <x-slot:title>Novedades del Blog</x-slot:title>
 
@@ -42,12 +44,12 @@
                             </div>
 
                             <div class="mt-3">
-                                <a href="{{ route('blogs.view', $blog->id) }}" class="btn btn-sm btn-primary">Leer más</a>
+                                <a href="{{ route('blogs.view',['id'=>$blog->id]) }}" class="btn btn-sm btn-primary">Leer más</a>
 
                                 @auth
-                                    <a href="{{ route('blogs.edit', $blog->id) }}" class="btn btn-sm btn-warning ms-1">Editar</a>
+                                    <a href="{{ route('blogs.edit', ['id'=>$blog->id]) }}" class="btn btn-sm btn-warning ms-1">Editar</a>
 
-                                    <form action="{{ route('blogs.destroy', $blog->id) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('¿Estás seguro de eliminar esta entrada?');">
+                                    <form action="{{ route('blogs.destroy', ['id'=>$blog->id]) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('¿Estás seguro de eliminar esta entrada?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
