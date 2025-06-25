@@ -1,3 +1,10 @@
+<?php
+/** @var \Illuminaate\Support\ViewErrorBag $errors */
+/** @var \App\Models\Blog $blog */
+/** @var \Illuminate\Support\Cllection<int,  \App\Models\Categoria> $categorias */
+$categoriaIds = $blog->categorias->pluck('categoria_id')->all();
+?>
+
 <x-layout>
     <x-slot:title>Editar Entrada</x-slot>
 
@@ -32,17 +39,25 @@
                 @enderror
             </div>
 
-            @if($blog->imagen)
-                <div class="mb-4">
-                    <label class="form-label fw-semibold d-block">Imagen Actual</label>
+            @if ($blog->imagen && \Illuminate\Support\Facades\Storage::disk('public')->exists($blog->imagen))
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold d-block">Imagen Actual</label>
+                        <img
+                            src="{{ asset('storage/' . $blog->imagen) }}"
+                            alt="Imagen actual de {{ $blog->titulo }}"
+                            class="img-fluid rounded shadow-sm"
+                            style="max-height: 320px; object-fit: contain;"
+                        >
+                    </div>
+                @else
                     <img
-                        src="{{ asset('storage/' . $blog->imagen) }}"
-                        alt="Imagen actual de {{ $blog->titulo }}"
+                        src="{{ asset('images/default-image.jpg') }}"
+                        alt="Imagen no disponible"
                         class="img-fluid rounded shadow-sm"
-                        style="max-height: 320px; object-fit: contain;"
+                        style="max-height: 300px; object-fit: contain;"
                     >
-                </div>
-            @endif
+                @endif
+
 
             <div class="mb-4">
                 <label for="imagen" class="form-label fw-semibold">Nueva imagen (opcional)</label>
@@ -58,6 +73,48 @@
                 @enderror
             </div>
 
+
+              <div class="mb-3">
+
+                 <fieldset class="mb-3">
+                    <lengend><h3>Categorías:</h3> </lengend>
+                    @foreach($categorias as $categoria)
+                        <label class="mb-3">
+                            <input type="checkbox" name="categoria_id[]"
+                            value="{{ $categoria->categoria_id }}"
+                            @checked(in_array($categoria->categoria_id, old('categoria_id', $categoriaIds)))
+                            >
+                            {{ $categoria->name }}
+                        </label>
+                    @endforeach
+                </fieldset>
+
+                @error('categoria')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+
+            <div class="mb-4">
+
+            <label for="rating_fk" class="form-label fw-semibold">Clasificación</label>
+
+                <select
+                    id="rating_fk"
+                    name="rating_fk"
+                    class="form-control"
+                >
+                 <option disabled selected>Seleccioná una clasificación</option>
+
+                @foreach($ratings as $rating)
+                    <option value="{{ $rating->rating_id }}"
+                        @selected($rating->rating_id == old('rating_fk', $blog->rating_fk))
+                        >
+                        {{ $rating->name}}
+                    </option>
+                @endforeach
+                </select>
+            </div>
 
             <div class="mb-5">
                 <label for="resumen" class="form-label fw-semibold">Resumen</label>

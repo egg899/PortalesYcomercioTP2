@@ -13,9 +13,10 @@
 
     {{-- Imagen del Blog --}}
     <div class="text-center mb-4">
-        @if ($blog->imagen)
+        @if ($blog->imagen && \Illuminate\Support\Facades\Storage::has($blog->imagen))
             <img
                 src="{{ asset('storage/' . $blog->imagen) }}"
+                {{-- src="{{ \Illuminate\Support\Facades\Storage::url($blog->imagen)  }}" --}}
                 alt="{{ $blog->titulo }}"
                 class="img-fluid rounded shadow-sm"
                 style="max-height: 500px; object-fit: cover;"

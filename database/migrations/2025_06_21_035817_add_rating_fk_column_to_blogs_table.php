@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->unsignedTinyInteger('rating_fk')->nullable();
+            $table->foreign('rating_fk')->references('rating_id')->on('ratings');
         });
     }
 
@@ -22,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->dropColumn('rating_fk');
+        });
     }
 };

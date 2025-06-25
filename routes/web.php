@@ -16,7 +16,8 @@ Route::get('/producto', [\App\Http\Controllers\ProductoController::class, 'index
     ->name('producto.index');
 
 Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])
-    ->name('blogs.index');
+    ->name('blogs.index')
+    ->middleware('auth');
 
 
 // Ver un blog individual

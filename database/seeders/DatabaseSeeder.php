@@ -21,9 +21,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            ProductoSeeder::class,
-            BlogSeeder::class,
             UserSeeder::class,
+            RatingSeeder::class,
+            ProductoSeeder::class,
+            CategoriasSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

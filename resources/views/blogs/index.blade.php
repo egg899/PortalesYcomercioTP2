@@ -21,16 +21,16 @@
             @forelse ($blogs as $blog)
                 <div class="col-md-6 col-lg-4 mb-5 d-flex align-items-stretch">
                     <div class="card shadow-sm border-0 w-100">
-                        @if($blog->imagen)
+                        @if ($blog->imagen && \Illuminate\Support\Facades\Storage::disk('public')->exists($blog->imagen))
                             <img src="{{ asset('storage/' . $blog->imagen) }}"
-                                 class="card-img-top"
-                                 alt="{{ $blog->titulo }}"
-                                 style="height: 250px; object-fit: cover;">
+                                class="card-img-top"
+                                alt="{{ $blog->titulo }}"
+                                style="height: 250px; object-fit: cover;">
                         @else
                             <img src="{{ asset('images/default-image.jpg') }}"
-                                 class="card-img-top"
-                                 alt="Imagen no disponible"
-                                 style="height: 250px; object-fit: cover;">
+                                class="card-img-top"
+                                alt="Imagen no disponible"
+                                style="height: 250px; object-fit: cover;">
                         @endif
 
                         <div class="card-body d-flex flex-column justify-content-between">
@@ -41,6 +41,15 @@
                                 </p>
                                 <p class="card-text">{{ Str::limit($blog->resumen, 150, '...') }}</p>
                                 <p class="text-secondary"><em>Por {{ $blog->autor }}</em></p>
+                                <p class="text-secondary">
+                                    <b>{{ $blog->rating?->name ?? 'Sin rating' }}</b>
+                                </p>                                <p class="text-secoondary">
+                                    @foreach ( $blog->categorias as $categoria)
+
+                                        <span class="badge bg-secondary">{{ $categoria->name }}</span>
+
+                                    @endforeach
+                                </p>
                             </div>
 
                             <div class="mt-3">

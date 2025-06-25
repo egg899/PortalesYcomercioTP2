@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
+            $table->tinyIncrements('rating_id');
+            $table->string('name');
             $table->timestamps();
         });
     }

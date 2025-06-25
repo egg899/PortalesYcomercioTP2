@@ -127,17 +127,51 @@
             </div>
 
             <div class="mb-3">
-                <input
+
+                 <fieldset class="mb-3">
+                    <lengend><h3>Categorías:</h3> </lengend>
+                    @foreach($categorias as $categoria)
+                        <label class="mb-3">
+                            <input
+                                type="checkbox"
+                                name="categoria_id[]"
+                                value="{{ $categoria->categoria_id }}"
+                                @checked(in_array($categoria->categoria_id, old('categoria_id', [])))
+                            >
+                            {{ $categoria->name }}
+                        </label>
+                    @endforeach
+                </fieldset>
+                {{-- <input
                     type="text"
                     name="categoria"
                     class="form-control @error('categoria') is-invalid @enderror"
                     placeholder="Categoría"
                     value="{{ old('categoria') }}"
                     required
-                >
+                > --}}
                 @error('categoria')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <div class="mb-4">
+
+                <select
+                    id="rating_fk"
+                    name="rating_fk"
+                    class="form-control"
+                >
+                 <option disabled selected>Seleccioná una clasificación</option>
+
+                @foreach($ratings as $rating)
+                    <option value="{{ $rating->rating_id }}"
+                        @selected($rating->rating_id == old('rating_fk'))
+                        >
+                        {{ $rating->name}}
+                    </option>
+                @endforeach
+                </select>
             </div>
 
             <div class="mb-4">
