@@ -74,3 +74,10 @@ Route::post('/registro', [\App\http\Controllers\AuthController::class, 'register
 
 // Cerrar sesión
 Route::post('cerrar-sesion', [\App\http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
+
+
+
+//Ver Usuarios registrados
+Route::get('/admin/usuarios', [\App\Http\Controllers\UsuarioController::class, 'index'])
+    ->name('admin.usuarios.index')
+    ->middleware('auth');

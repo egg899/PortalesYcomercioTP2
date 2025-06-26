@@ -56,11 +56,14 @@
                                 <a href="{{ route('blogs.view',['id'=>$blog->id]) }}" class="btn btn-sm btn-primary">Leer más</a>
 
                                 @auth
-                                    <a href="{{ route('blogs.edit', ['id'=>$blog->id]) }}" class="btn btn-sm btn-warning ms-1">Editar</a>
+                                {{--Botones exclusivos para administradores--}}
+                                    @if(auth()->user()->role==='admin')
+                                        <a href="{{ route('blogs.edit', ['id'=>$blog->id]) }}" class="btn btn-sm btn-warning ms-1">Editar</a>
 
-                                    <a href="{{ route('blogs.delete', ['id'=>$blog->id]) }}" class="btn btn-sm btn-danger">
-                                        Eliminar
-                                    </a>
+                                        <a href="{{ route('blogs.delete', ['id'=>$blog->id]) }}" class="btn btn-sm btn-danger">
+                                            Eliminar
+                                        </a>
+                                    @endif
                                     {{-- <form action="{{ route('blogs.destroy', ['id'=>$blog->id]) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('¿Estás seguro de eliminar esta entrada?');">
                                         @csrf
                                         @method('DELETE')

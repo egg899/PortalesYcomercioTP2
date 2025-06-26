@@ -12,5 +12,10 @@ class Producto extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['nombre', 'descripcion', 'precio', 'imagen'];
 
+    public function compras()
+    {
+        return $this->hasMany(Compra::class. 'producto_id');
+    }
+
 
 }

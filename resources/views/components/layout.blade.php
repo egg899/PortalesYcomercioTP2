@@ -25,6 +25,13 @@
               <x-nav-link route="about">Quienes Somos?</x-nav-link>
               <x-nav-link route="producto.index">Producto</x-nav-link>
               <x-nav-link route="blogs.index">Blog</x-nav-link>
+              @auth
+                  @if(auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.usuarios.index') }}">Lista de Usuarios</a>
+                    </li>
+                  @endif
+              @endauth
             </ul>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
